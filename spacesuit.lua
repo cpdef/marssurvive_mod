@@ -9,14 +9,25 @@ local set_wear_sp = function(inventory, wear)
 end
 
 local player_get_sp = function(inventory)
+--  print("get_sp:"..inventory:get_stack("main", 1):get_name().."#")
+--  print("get_sp_sub:"..string.sub(inventory:get_stack("main", 1):get_name(), 15).."#")
+
         return marssurvive.registered_spacesuits[string.sub(inventory:get_stack("main", 1):get_name(), 15)]
 end
-	
+
 local player_attach_sp = function(player)
         marssurvive.player_sp[player:get_player_name()].sp=1
         local sp=player_get_sp(player:get_inventory())
         marssurvive.player_sp[player:get_player_name()].skin=player:get_properties().textures
-	player:set_properties({visual = "mesh",textures = sp.textures, visual_size = {x=1, y=1}})
+ --       print(dump(sp))
+ --       print(dump(sp.textures))
+ --       print(player:get_player_name())
+        local spp = player:get_inventory():get_stack("main", 1):get_name()
+  --      print("SUIT is:"..spp)
+        if spp ~= "marssurvive:spred" and spp ~= "marssurvive:spblue" and md0_config then
+          sp.textures = sp.textures and {textures_switch(player:get_player_name())}
+        end
+	player:set_properties({visual = "mesh",textures = sp.textures , visual_size = {x=1, y=1}})
 end
 
 marssurvive.registered_spacesuits = {}
@@ -32,8 +43,8 @@ marssurvive.register_spacesuit = function(name, inventory_image, heal, textures)
 end
 
 marssurvive.register_spacesuit("", "marssurvive_sp.png", 1, {"marssurvive_sp_white.png"})
-marssurvive.register_spacesuit("red", "marssurvive_sp.png", 2, {"marssurvive_sp_red.png"})
-marssurvive.register_spacesuit("blue", "marssurvive_sp.png", 3, {"marssurvive_sp_blue.png"})
+marssurvive.register_spacesuit("red", "marssurvive_sp_inv-red.png", 2, {"marssurvive_sp_red.png"})
+marssurvive.register_spacesuit("blue", "marssurvive_sp_inv-blue.png", 3, {"marssurvive_sp_blue.png"})
 
 --CRAFT
 
@@ -169,7 +180,9 @@ minetest.register_globalstep(function(dtime)
 			stack_one_sp(player:get_inventory()) and
 			player:get_inventory():get_stack("main", 1):get_wear()>=65533 then
 			marssurvive.player_sp[player:get_player_name()].sp=1
-		elseif not stack_one_sp(player:get_inventory()) and n~="ignore" then
+		elseif ((not stack_one_sp(player:get_inventory()))
+			or player:get_inventory():get_stack("main", 1):get_wear()>=65533)
+			and n~="ignore" then
 		        if n=="air" then								--(no spacesuit and in default air: lose 8 hp)
 			player:set_hp(player:get_hp()-8)
 		        elseif n~="marssurvive:air2" then						--(no spacesuit and inside something else: lose 1 hp)
@@ -180,13 +193,37 @@ minetest.register_globalstep(function(dtime)
 end)
 
 --NEW (ARMOR)
+
 minetest.register_on_player_hpchange(function(player, hp_change)
+--  print("origional:"..hp_change)
+
 	if hp_change < 0 then
 	        local inv = player:get_inventory()
 	        if stack_one_sp(inv) then
 	                local sp = player_get_sp(inv)
 		        hp_change = hp_change * (1/sp.heal)
+            if hp_change > -1 then hp_change = -1 end --add by juli to keep hungry effect on special spacesuit
+  --          print(hp_change)
 	        end
 	end
+--  print(hp_change)
 	return hp_change
 end, true)
+
+
+--[[
+minetest.register_on_player_hpchange(function(player, hp_change)
+   if hp_change < 0 then
+           local inv = player:get_inventory()
+           if stack_one_sp(inv) then
+                   local sp = player_get_sp(inv)
+              hp_change = hp_change * (1/sp.heal)
+         print(hp_change)
+         if hp_change > -1 then
+            return -1
+         end
+           end
+   end
+   return hp_change
+end, true)
+--]]

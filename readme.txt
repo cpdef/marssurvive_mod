@@ -1,8 +1,6 @@
 Licenses: code and media CC0
-AiTechEye logo (marssurvive_ateore.png): CC BY-SA 3.0
+Created by: UjEdwin + juli
 
-Created by: AiTechEye + juli
-Version: 7.1
 Mars survive
 
 the title says all
@@ -28,13 +26,7 @@ place it and another teleport will be placed at +1100 block hight over it, evyer
 
 The space occurs at +1000 blocks height.
 
-Version 7.1
-changed: marssurvive:ujeore + texture
-changed: aliens fall and jump system
-changed: replace all .env: and node_group
-updated: punch system
-changed: alien interval from 0.2s to 0.5s
-fixed marssurvive:stone_glow texture (missing ".png")
+
 Version 7 (by juli)
 Removed: the entity from spacesuit
 Added: 2 new spacesuits: red: half damage by aliens, blue: 1/3 damage by aliens

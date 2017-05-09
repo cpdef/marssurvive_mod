@@ -1,13 +1,13 @@
 minetest.clear_registered_ores()
-minetest.clear_registered_biomes()
-minetest.clear_registered_decorations()
-minetest.override_item("default:cobble", {tiles = {"default_desert_stone.png^[colorize:#cf7d6788"}})
-minetest.override_item("default:mossycobble", {tiles = {"default_desert_stone.png^[colorize:#cf7d6788"}})
+--minetest.clear_registered_biomes()
+--minetest.clear_registered_decorations()
+--minetest.override_item("default:cobble", {tiles = {"default_desert_stone.png^[colorize:#cf7d6788"}})
+--minetest.override_item("default:mossycobble", {tiles = {"default_desert_stone.png^[colorize:#cf7d6788"}})
 minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.png^[colorize:#cf7d6788"}})
 
 	minetest.register_biome({
 		name = "mars_desert",
-		--node_dust = "",
+		node_dust = "marssurvive:sand",
 		node_top = "marssurvive:sand",
 		depth_top = 5,
 		node_filler = "marssurvive:stone",
@@ -19,8 +19,8 @@ minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.pn
 		node_river_water = "air",
 		y_min = -31000,
 		y_max = 200,
-		heat_point = 50,
-		humidity_point = 50,
+--		heat_point = 50,
+--		humidity_point = 50,
 	})
 
 	minetest.register_ore({
@@ -74,7 +74,7 @@ minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.pn
 		clust_scarcity = 8 * 8 * 8,
 		clust_num_ores = 8,
 		clust_size     = 4,
-		y_min          = -100,
+		y_min          = -31000,
 		y_max          = 200,
 	})
 
@@ -100,15 +100,27 @@ minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.pn
 		y_max          = 50,
 	})
 
+--linus added
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "marssurvive:stone_with_iron1",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 20 * 20 * 20,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = 50,
+	})
+
 	minetest.register_ore({
 		ore_type       = "scatter",
 		ore            = "marssurvive:ice",
-		wherein        = "marssurvive:stone",
+		wherein        = "marssurvive:stone","marssurvive:sand",
 		clust_scarcity = 12 * 12 * 12,
 		clust_num_ores = 3,
 		clust_size     = 5,
 		y_min          = -31000,
-		y_max          = -10,
+		y_max          = 100,
 	})
 
 
@@ -132,7 +144,7 @@ minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.pn
 		clust_num_ores = 3,
 		clust_size     = 2,
 		y_min          = -31000,
-		y_max          = -1024,
+		y_max          = -5000,
 	})
 
 
@@ -182,34 +194,108 @@ minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.pn
 		y_max          = -16,
 	})
 
+	--ores from technid mod
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "technic:mineral_uranium",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 10 * 10 * 10,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = -250,
+	})
+
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "technic:mineral_chromium",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 10 * 10 * 10,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = -250,
+	})
+
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "technic:mineral_zinc",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 10 * 10 * 10,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = -250,
+	})
+
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "technic:mineral_lead",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 10 * 10 * 10,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = -250,
+	})
+
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "technic:granite",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 10 * 10 * 10,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = -250,
+	})
+
+	minetest.register_ore({
+		ore_type       = "scatter",
+		ore            = "technic:marble",
+		wherein        = "marssurvive:stone",
+		clust_scarcity = 10 * 10 * 10,
+		clust_num_ores = 5,
+		clust_size     = 2,
+		y_min          = -31000,
+		y_max          = -250,
+	})
+
+
+
+
+
 	minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"marssurvive:sand"},
+		place_on = {"marssurvive:stone"},
 		sidelen = 16,
 		fill_ratio = 0.01,
 		y_min = -20,
 		y_max = 200,
-		decoration = "marssurvive:stone_medium",
+		--decoration = "marssurvive:stone_medium",
+		decoration = "marssurvive:sand",
 	})
 
 	minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"marssurvive:sand"},
+		place_on = {"marssurvive:stone"},
 		sidelen = 16,
 		fill_ratio = 0.01,
 		y_min = -20,
 		y_max = 200,
-		decoration = "marssurvive:stone_small",
+--		decoration = "marssurvive:stone_small",
+decoration = "marssurvive:sand",
+
 	})
 
 	minetest.register_decoration({
 		deco_type = "simple",
-		place_on = {"marssurvive:sand","marssurvive:stone"},
+		place_on = {"marssurvive:stone"},
 		sidelen = 16,
 		fill_ratio = 0.00001,
 		y_min = -31000,
 		y_max = 50,
-		decoration = "marssurvive:crystal",
+		decoration = "marssurvive:sand",
 	})
 
 -- this part makes it crash or just wont work
@@ -219,7 +305,7 @@ minetest.override_item("stairs:stair_cobble", {tiles = {"default_desert_stone.pn
 --seed=8777,
 --water_level=-31000,
 --flags="caves, noflat",
---mg_name = "marssurvive", 
+--mg_name = "marssurvive",
 --}--light, mgv7_np_cave1
 
 
